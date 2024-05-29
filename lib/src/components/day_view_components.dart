@@ -102,9 +102,9 @@ class RoundedEventTile extends StatelessWidget {
               child: Text(
                 "+${totalEvents - 1} more",
                 style: (descriptionStyle ??
-                        TextStyle(
-                          color: backgroundColor.accent.withAlpha(200),
-                        ))
+                    TextStyle(
+                      color: backgroundColor.accent.withAlpha(200),
+                    ))
                     .copyWith(fontSize: 17),
               ),
             ),
@@ -128,18 +128,18 @@ class DayPageHeader extends CalendarPageHeader {
     required DateTime date,
     HeaderStyle headerStyle = const HeaderStyle(),
   }) : super(
-          key: key,
-          date: date,
-          // ignore_for_file: deprecated_member_use_from_same_package
-          backgroundColor: backgroundColor,
-          iconColor: iconColor,
-          onNextDay: onNextDay,
-          onPreviousDay: onPreviousDay,
-          onTitleTapped: onTitleTapped,
-          dateStringBuilder:
-              dateStringBuilder ?? DayPageHeader._dayStringBuilder,
-          headerStyle: headerStyle,
-        );
+    key: key,
+    date: date,
+    // ignore_for_file: deprecated_member_use_from_same_package
+    backgroundColor: backgroundColor,
+    iconColor: iconColor,
+    onNextDay: onNextDay,
+    onPreviousDay: onPreviousDay,
+    onTitleTapped: onTitleTapped,
+    dateStringBuilder:
+    dateStringBuilder ?? DayPageHeader._dayStringBuilder,
+    headerStyle: headerStyle,
+  );
 
   static String _dayStringBuilder(DateTime date, {DateTime? secondaryDate}) =>
       "${date.day} - ${date.month} - ${date.year}";
@@ -165,23 +165,36 @@ class DefaultTimeLineMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hour = ((date.hour - 1) % 12) + 1;
+    final hour = date.hour;
+    final minute = date.minute;
     final timeString = (timeStringBuilder != null)
         ? timeStringBuilder!(date)
         : date.minute != 0
-            ? "$hour:${date.minute}"
-            : "$hour ${date.hour ~/ 12 == 0 ? "am" : "pm"}";
+        ? "$hour:${date.minute}"
+        : "$hour:00";
     return Transform.translate(
-      offset: Offset(0, -7.5),
-      child: Padding(
+      offset: Offset(0, -3),
+      child: Container(
         padding: const EdgeInsets.only(right: 7.0),
-        child: Text(
+        child: minute == 0
+            ? Text(
           timeString,
           textAlign: TextAlign.right,
           style: markingStyle ??
               TextStyle(
                 fontSize: 15.0,
+                color: Color(0xFF3B71CA),
+                fontWeight: FontWeight.w500,
               ),
+        )
+            : Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            margin: EdgeInsets.only(top: 3),
+            height: 1,
+            width: 16,
+            color: Color(0xFF3B71CA),
+          ),
         ),
       ),
     );

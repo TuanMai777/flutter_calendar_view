@@ -299,27 +299,27 @@ class WeekView<T extends Object?> extends StatefulWidget {
     this.fullDayHeaderTextConfig,
     this.keepScrollOffset = false,
   })  : assert(!(onHeaderTitleTap != null && weekPageHeaderBuilder != null),
-            "can't use [onHeaderTitleTap] & [weekPageHeaderBuilder] simultaneously"),
+  "can't use [onHeaderTitleTap] & [weekPageHeaderBuilder] simultaneously"),
         assert((timeLineOffset) >= 0,
-            "timeLineOffset must be greater than or equal to 0"),
+        "timeLineOffset must be greater than or equal to 0"),
         assert(width == null || width > 0,
-            "Calendar width must be greater than 0."),
+        "Calendar width must be greater than 0."),
         assert(timeLineWidth == null || timeLineWidth > 0,
-            "Time line width must be greater than 0."),
+        "Time line width must be greater than 0."),
         assert(
-            heightPerMinute > 0, "Height per minute must be greater than 0."),
+        heightPerMinute > 0, "Height per minute must be greater than 0."),
         assert(
-          weekDetectorBuilder == null || onDateLongPress == null,
-          """If you use [weekPressDetectorBuilder] 
+        weekDetectorBuilder == null || onDateLongPress == null,
+        """If you use [weekPressDetectorBuilder] 
           do not provide [onDateLongPress]""",
         ),
         assert(
-          startHour <= 0 || startHour != endHour,
-          "startHour must be greater than 0 or startHour should not equal to endHour",
+        startHour <= 0 || startHour != endHour,
+        "startHour must be greater than 0 or startHour should not equal to endHour",
         ),
         assert(
-          endHour <= Constants.hoursADay || endHour < startHour,
-          "End hour must be less than 24 or startHour must be less than endHour",
+        endHour <= Constants.hoursADay || endHour < startHour,
+        "End hour must be less than 24 or startHour must be less than endHour",
         ),
         super(key: key);
 
@@ -422,11 +422,11 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
       _controller = newController;
 
       _controller!
-        // Removes existing callback.
+      // Removes existing callback.
         ..removeListener(_reloadCallback)
 
-        // Reloads the view if there is any change in controller or
-        // user adds new events.
+      // Reloads the view if there is any change in controller or
+      // user adds new events.
         ..addListener(_reloadCallback);
     }
   }
@@ -501,7 +501,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
                       onPageChanged: _onPageChange,
                       itemBuilder: (_, index) {
                         final dates = DateTime(_minDate.year, _minDate.month,
-                                _minDate.day + (index * DateTime.daysPerWeek))
+                            _minDate.day + (index * DateTime.daysPerWeek))
                             .datesOfWeek(start: widget.startDay);
 
                         return ValueListenableBuilder(
@@ -517,7 +517,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
                             weekNumberBuilder: _weekNumberBuilder,
                             weekDetectorBuilder: _weekDetectorBuilder,
                             liveTimeIndicatorSettings:
-                                _liveTimeIndicatorSettings,
+                            _liveTimeIndicatorSettings,
                             timeLineBuilder: _timeLineBuilder,
                             onTileTap: widget.onEventTap,
                             onTileLongTap: widget.onEventLongTap,
@@ -529,12 +529,11 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
                             hourIndicatorSettings: _hourIndicatorSettings,
                             hourLinePainter: _hourLinePainter,
                             halfHourIndicatorSettings:
-                                _halfHourIndicatorSettings,
+                            _halfHourIndicatorSettings,
                             quarterHourIndicatorSettings:
-                                _quarterHourIndicatorSettings,
+                            _quarterHourIndicatorSettings,
                             dates: dates,
-                            showLiveLine: widget.showLiveTimeLineInAllDays ||
-                                _showLiveTimeIndicator(dates),
+                            showLiveLine: widget.showLiveTimeLineInAllDays,
                             timeLineOffset: widget.timeLineOffset,
                             timeLineWidth: _timeLineWidth,
                             verticalLineOffset: 0,
@@ -551,7 +550,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
                             showHalfHours: widget.showHalfHours,
                             showQuarterHours: widget.showQuarterHours,
                             emulateVerticalOffsetBy:
-                                widget.emulateVerticalOffsetBy,
+                            widget.emulateVerticalOffsetBy,
                             showWeekDayAtBottom: widget.showWeekDayAtBottom,
                             endHour: _endHour,
                             fullDayHeaderTitle: _fullDayHeaderTitle,
@@ -602,8 +601,8 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
     }
 
     assert(
-        _weekDays.isNotEmpty,
-        "weekDays can not be empty.\n"
+    _weekDays.isNotEmpty,
+    "weekDays can not be empty.\n"
         "Make sure you are providing weekdays in initialization of "
         "WeekView. or showWeekends is true if you are providing only "
         "saturday or sunday in weekDays.");
@@ -620,7 +619,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         );
 
     assert(_liveTimeIndicatorSettings.height < _hourHeight,
-        "liveTimeIndicator height must be less than minuteHeight * 60");
+    "liveTimeIndicator height must be less than minuteHeight * 60");
 
     _hourIndicatorSettings = widget.hourIndicatorSettings ??
         HourIndicatorSettings(
@@ -630,7 +629,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         );
 
     assert(_hourIndicatorSettings.height < _hourHeight,
-        "hourIndicator height must be less than minuteHeight * 60");
+    "hourIndicator height must be less than minuteHeight * 60");
 
     _weekTitleWidth =
         (_width - _timeLineWidth - _hourIndicatorSettings.offset) /
@@ -644,7 +643,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         );
 
     assert(_halfHourIndicatorSettings.height < _hourHeight,
-        "halfHourIndicator height must be less than minuteHeight * 60");
+    "halfHourIndicator height must be less than minuteHeight * 60");
 
     _quarterHourIndicatorSettings = widget.quarterHourIndicatorSettings ??
         HourIndicatorSettings(
@@ -652,7 +651,7 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         );
 
     assert(_quarterHourIndicatorSettings.height < _hourHeight,
-        "quarterHourIndicator height must be less than minuteHeight * 60");
+    "quarterHourIndicator height must be less than minuteHeight * 60");
   }
 
   void _calculateHeights() {
@@ -718,9 +717,9 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
         .withoutTime;
 
     assert(
-      _minDate.isBefore(_maxDate),
-      "Minimum date must be less than maximum date.\n"
-      "Provided minimum date: $_minDate, maximum date: $_maxDate",
+    _minDate.isBefore(_maxDate),
+    "Minimum date must be less than maximum date.\n"
+        "Provided minimum date: $_minDate, maximum date: $_maxDate",
     );
 
     _totalWeeks =
@@ -750,16 +749,44 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
 
   /// Default builder for week line.
   Widget _defaultWeekDayBuilder(DateTime date) {
+    final now = DateTime.now();
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(widget.weekDayStringBuilder?.call(date.weekday - 1) ??
-              Constants.weekTitles[date.weekday - 1]),
-          Text(widget.weekDayDateStringBuilder?.call(date.day) ??
-              date.day.toString()),
-        ],
+      child: Container(
+        width: 36,
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: (date.day == now.day &&
+              date.year == now.year &&
+              date.month == now.month)
+              ? Border.all(
+            width: 1,
+            color: Color(0xFFFA6900),
+          )
+              : null,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.weekDayStringBuilder?.call(date.weekday - 1) ??
+                  Constants.weekTitles[date.weekday - 1],
+              style: TextStyle(
+                color: Color(0xFFFA6900),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              widget.weekDayDateStringBuilder?.call(date.day) ??
+                  date.day.toString(),
+              style: TextStyle(
+                color: Color(0xFFFA6900),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -781,19 +808,19 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   /// [widget.eventTileBuilder] is null
   ///
   Widget _defaultTimeLineBuilder(DateTime date) => DefaultTimeLineMark(
-        date: date,
-        timeStringBuilder: widget.timeLineStringBuilder,
-      );
+    date: date,
+    timeStringBuilder: widget.timeLineStringBuilder,
+  );
 
   /// Default timeline builder. This builder will be used if
   /// [widget.eventTileBuilder] is null
   Widget _defaultEventTileBuilder(
-    DateTime date,
-    List<CalendarEventData<T>> events,
-    Rect boundary,
-    DateTime startDuration,
-    DateTime endDuration,
-  ) =>
+      DateTime date,
+      List<CalendarEventData<T>> events,
+      Rect boundary,
+      DateTime startDuration,
+      DateTime endDuration,
+      ) =>
       DefaultEventTile(
         date: date,
         events: events,
@@ -805,9 +832,9 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   /// Default view header builder. This builder will be used if
   /// [widget.dayTitleBuilder] is null.
   Widget _defaultWeekPageHeaderBuilder(
-    DateTime startDate,
-    DateTime endDate,
-  ) {
+      DateTime startDate,
+      DateTime endDate,
+      ) {
     return WeekPageHeader(
       startDate: _currentStartDate,
       endDate: _currentEndDate,
@@ -834,19 +861,19 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
   }
 
   HourLinePainter _defaultHourLinePainter(
-    Color lineColor,
-    double lineHeight,
-    double offset,
-    double minuteHeight,
-    bool showVerticalLine,
-    double verticalLineOffset,
-    LineStyle lineStyle,
-    double dashWidth,
-    double dashSpaceWidth,
-    double emulateVerticalOffsetBy,
-    int startHour,
-    int endHour,
-  ) {
+      Color lineColor,
+      double lineHeight,
+      double offset,
+      double minuteHeight,
+      bool showVerticalLine,
+      double verticalLineOffset,
+      LineStyle lineStyle,
+      double dashWidth,
+      double dashSpaceWidth,
+      double emulateVerticalOffsetBy,
+      int startHour,
+      int endHour,
+      ) {
     return HourLinePainter(
       lineColor: lineColor,
       lineHeight: lineHeight,
@@ -992,10 +1019,10 @@ class WeekViewState<T extends Object?> extends State<WeekView<T>> {
 
   /// Animate to specific scroll controller offset
   void animateTo(
-    double offset, {
-    Duration duration = const Duration(milliseconds: 200),
-    Curve curve = Curves.linear,
-  }) {
+      double offset, {
+        Duration duration = const Duration(milliseconds: 200),
+        Curve curve = Curves.linear,
+      }) {
     _scrollController.animateTo(
       offset,
       duration: duration,

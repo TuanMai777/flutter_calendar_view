@@ -215,9 +215,9 @@ class _InternalDayViewPageState<T extends Object?>
           fullDayEventList.isEmpty
               ? SizedBox.shrink()
               : widget.fullDayEventBuilder(
-                  widget.controller.getFullDayEvent(widget.date),
-                  widget.date,
-                ),
+            widget.controller.getFullDayEvent(widget.date),
+            widget.date,
+          ),
           Expanded(
             child: SingleChildScrollView(
               controller: widget.keepScrollOffset
@@ -226,121 +226,127 @@ class _InternalDayViewPageState<T extends Object?>
               child: SizedBox(
                 height: widget.height,
                 width: widget.width,
-                child: Stack(
+                child: Column(
                   children: [
-                    CustomPaint(
-                      size: Size(widget.width, widget.height),
-                      painter: HourLinePainter(
-                        lineColor: widget.hourIndicatorSettings.color,
-                        lineHeight: widget.hourIndicatorSettings.height,
-                        offset: widget.timeLineWidth +
-                            widget.hourIndicatorSettings.offset,
-                        minuteHeight: widget.heightPerMinute,
-                        verticalLineOffset: widget.verticalLineOffset,
-                        showVerticalLine: widget.showVerticalLine,
-                        lineStyle: widget.hourIndicatorSettings.lineStyle,
-                        dashWidth: widget.hourIndicatorSettings.dashWidth,
-                        dashSpaceWidth:
-                            widget.hourIndicatorSettings.dashSpaceWidth,
-                        emulateVerticalOffsetBy: widget.emulateVerticalOffsetBy,
-                        startHour: widget.startHour,
-                        endHour: widget.endHour,
+                    SizedBox(height: 7),
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          CustomPaint(
+                            size: Size(widget.width, widget.height),
+                            painter: HourLinePainter(
+                              lineColor: widget.hourIndicatorSettings.color,
+                              lineHeight: widget.hourIndicatorSettings.height,
+                              offset: widget.timeLineWidth +
+                                  widget.hourIndicatorSettings.offset,
+                              minuteHeight: widget.heightPerMinute,
+                              verticalLineOffset: widget.verticalLineOffset,
+                              showVerticalLine: widget.showVerticalLine,
+                              lineStyle: widget.hourIndicatorSettings.lineStyle,
+                              dashWidth: widget.hourIndicatorSettings.dashWidth,
+                              dashSpaceWidth:
+                              widget.hourIndicatorSettings.dashSpaceWidth,
+                              emulateVerticalOffsetBy: widget.emulateVerticalOffsetBy,
+                              startHour: widget.startHour,
+                              endHour: widget.endHour,
+                            ),
+                          ),
+                          if (widget.showHalfHours)
+                            CustomPaint(
+                              size: Size(widget.width, widget.height),
+                              painter: HalfHourLinePainter(
+                                lineColor: widget.halfHourIndicatorSettings.color,
+                                lineHeight: widget.halfHourIndicatorSettings.height,
+                                offset: widget.timeLineWidth +
+                                    widget.halfHourIndicatorSettings.offset,
+                                minuteHeight: widget.heightPerMinute,
+                                lineStyle: widget.halfHourIndicatorSettings.lineStyle,
+                                dashWidth: widget.halfHourIndicatorSettings.dashWidth,
+                                dashSpaceWidth:
+                                widget.halfHourIndicatorSettings.dashSpaceWidth,
+                                startHour: widget.startHour,
+                                endHour: widget.endHour,
+                              ),
+                            ),
+                          if (widget.showQuarterHours)
+                            CustomPaint(
+                              size: Size(widget.width, widget.height),
+                              painter: QuarterHourLinePainter(
+                                lineColor: widget.quarterHourIndicatorSettings.color,
+                                lineHeight:
+                                widget.quarterHourIndicatorSettings.height,
+                                offset: widget.timeLineWidth +
+                                    widget.quarterHourIndicatorSettings.offset,
+                                minuteHeight: widget.heightPerMinute,
+                                lineStyle:
+                                widget.quarterHourIndicatorSettings.lineStyle,
+                                dashWidth:
+                                widget.quarterHourIndicatorSettings.dashWidth,
+                                dashSpaceWidth: widget
+                                    .quarterHourIndicatorSettings.dashSpaceWidth,
+                              ),
+                            ),
+                          widget.dayDetectorBuilder(
+                            width: widget.width,
+                            height: widget.height,
+                            heightPerMinute: widget.heightPerMinute,
+                            date: widget.date,
+                            minuteSlotSize: widget.minuteSlotSize,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: EventGenerator<T>(
+                              height: widget.height,
+                              date: widget.date,
+                              onTileLongTap: widget.onTileLongTap,
+                              onTileDoubleTap: widget.onTileDoubleTap,
+                              onTileTap: widget.onTileTap,
+                              eventArranger: widget.eventArranger,
+                              events: widget.controller.getEventsOnDay(
+                                widget.date,
+                                includeFullDayEvents: false,
+                              ),
+                              heightPerMinute: widget.heightPerMinute,
+                              eventTileBuilder: widget.eventTileBuilder,
+                              scrollNotifier: widget.scrollNotifier,
+                              startHour: widget.startHour,
+                              endHour: widget.endHour,
+                              width: widget.width -
+                                  widget.timeLineWidth -
+                                  widget.hourIndicatorSettings.offset -
+                                  widget.verticalLineOffset,
+                            ),
+                          ),
+                          TimeLine(
+                            height: widget.height,
+                            hourHeight: widget.hourHeight,
+                            timeLineBuilder: widget.timeLineBuilder,
+                            timeLineOffset: widget.timeLineOffset,
+                            timeLineWidth: widget.timeLineWidth,
+                            showHalfHours: widget.showHalfHours,
+                            startHour: widget.startHour,
+                            endHour: widget.endHour,
+                            showQuarterHours: widget.showQuarterHours,
+                            key: ValueKey(widget.heightPerMinute),
+                            liveTimeIndicatorSettings:
+                            widget.liveTimeIndicatorSettings,
+                          ),
+                          if (widget.showLiveLine)
+                            IgnorePointer(
+                              child: LiveTimeIndicator(
+                                liveTimeIndicatorSettings:
+                                widget.liveTimeIndicatorSettings,
+                                width: widget.width,
+                                height: widget.height,
+                                heightPerMinute: widget.heightPerMinute,
+                                timeLineWidth: widget.timeLineWidth,
+                                startHour: widget.startHour,
+                                endHour: widget.endHour,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
-                    if (widget.showHalfHours)
-                      CustomPaint(
-                        size: Size(widget.width, widget.height),
-                        painter: HalfHourLinePainter(
-                          lineColor: widget.halfHourIndicatorSettings.color,
-                          lineHeight: widget.halfHourIndicatorSettings.height,
-                          offset: widget.timeLineWidth +
-                              widget.halfHourIndicatorSettings.offset,
-                          minuteHeight: widget.heightPerMinute,
-                          lineStyle: widget.halfHourIndicatorSettings.lineStyle,
-                          dashWidth: widget.halfHourIndicatorSettings.dashWidth,
-                          dashSpaceWidth:
-                              widget.halfHourIndicatorSettings.dashSpaceWidth,
-                          startHour: widget.startHour,
-                          endHour: widget.endHour,
-                        ),
-                      ),
-                    if (widget.showQuarterHours)
-                      CustomPaint(
-                        size: Size(widget.width, widget.height),
-                        painter: QuarterHourLinePainter(
-                          lineColor: widget.quarterHourIndicatorSettings.color,
-                          lineHeight:
-                              widget.quarterHourIndicatorSettings.height,
-                          offset: widget.timeLineWidth +
-                              widget.quarterHourIndicatorSettings.offset,
-                          minuteHeight: widget.heightPerMinute,
-                          lineStyle:
-                              widget.quarterHourIndicatorSettings.lineStyle,
-                          dashWidth:
-                              widget.quarterHourIndicatorSettings.dashWidth,
-                          dashSpaceWidth: widget
-                              .quarterHourIndicatorSettings.dashSpaceWidth,
-                        ),
-                      ),
-                    widget.dayDetectorBuilder(
-                      width: widget.width,
-                      height: widget.height,
-                      heightPerMinute: widget.heightPerMinute,
-                      date: widget.date,
-                      minuteSlotSize: widget.minuteSlotSize,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: EventGenerator<T>(
-                        height: widget.height,
-                        date: widget.date,
-                        onTileLongTap: widget.onTileLongTap,
-                        onTileDoubleTap: widget.onTileDoubleTap,
-                        onTileTap: widget.onTileTap,
-                        eventArranger: widget.eventArranger,
-                        events: widget.controller.getEventsOnDay(
-                          widget.date,
-                          includeFullDayEvents: false,
-                        ),
-                        heightPerMinute: widget.heightPerMinute,
-                        eventTileBuilder: widget.eventTileBuilder,
-                        scrollNotifier: widget.scrollNotifier,
-                        startHour: widget.startHour,
-                        endHour: widget.endHour,
-                        width: widget.width -
-                            widget.timeLineWidth -
-                            widget.hourIndicatorSettings.offset -
-                            widget.verticalLineOffset,
-                      ),
-                    ),
-                    TimeLine(
-                      height: widget.height,
-                      hourHeight: widget.hourHeight,
-                      timeLineBuilder: widget.timeLineBuilder,
-                      timeLineOffset: widget.timeLineOffset,
-                      timeLineWidth: widget.timeLineWidth,
-                      showHalfHours: widget.showHalfHours,
-                      startHour: widget.startHour,
-                      endHour: widget.endHour,
-                      showQuarterHours: widget.showQuarterHours,
-                      key: ValueKey(widget.heightPerMinute),
-                      liveTimeIndicatorSettings:
-                          widget.liveTimeIndicatorSettings,
-                    ),
-                    if (widget.showLiveLine &&
-                        widget.liveTimeIndicatorSettings.height > 0)
-                      IgnorePointer(
-                        child: LiveTimeIndicator(
-                          liveTimeIndicatorSettings:
-                              widget.liveTimeIndicatorSettings,
-                          width: widget.width,
-                          height: widget.height,
-                          heightPerMinute: widget.heightPerMinute,
-                          timeLineWidth: widget.timeLineWidth,
-                          startHour: widget.startHour,
-                          endHour: widget.endHour,
-                        ),
-                      ),
                   ],
                 ),
               ),

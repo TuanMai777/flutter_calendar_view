@@ -70,7 +70,7 @@ class HourLinePainter extends CustomPainter {
       ..color = lineColor
       ..strokeWidth = lineHeight;
 
-    for (var i = startHour + 1; i < endHour; i++) {
+    for (var i = startHour; i < endHour; i++) {
       final dy = (i - startHour) * minuteHeight * 60;
       if (lineStyle == LineStyle.dashed) {
         var startX = dx;
@@ -348,13 +348,13 @@ class CurrentTimeLinePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) =>
       oldDelegate is CurrentTimeLinePainter &&
-      (color != oldDelegate.color ||
-          height != oldDelegate.height ||
-          offset != oldDelegate.offset ||
-          bulletRadius != oldDelegate.bulletRadius ||
-          timeString != oldDelegate.timeString ||
-          timeBackgroundViewWidth != oldDelegate.timeBackgroundViewWidth ||
-          showBullet != oldDelegate.showBullet ||
-          showTime != oldDelegate.showTime ||
-          showTimeBackgroundView != oldDelegate.showTimeBackgroundView);
+          (color != oldDelegate.color ||
+              height != oldDelegate.height ||
+              offset != oldDelegate.offset ||
+              bulletRadius != oldDelegate.bulletRadius ||
+              timeString != oldDelegate.timeString ||
+              timeBackgroundViewWidth != oldDelegate.timeBackgroundViewWidth ||
+              showBullet != oldDelegate.showBullet ||
+              showTime != oldDelegate.showTime ||
+              showTimeBackgroundView != oldDelegate.showTimeBackgroundView);
 }
